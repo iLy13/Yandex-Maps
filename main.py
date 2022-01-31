@@ -2,7 +2,7 @@ import os
 import sys
 import pygame
 import requests
-from yandex_functions import get_ll_spn, get_coordinates, get_nearest_object, geocode
+from functions import get_ll_spn, get_coordinates, get_nearest_object, geocode
 
 toponym_to_find = "Красноярск, ул. Ленина, 114"
 map_api_server = "http://static-maps.yandex.ru/1.x/"
@@ -62,4 +62,3 @@ while running:
                 
     screen.blit(pygame.image.load('map1.png'), (0, 0))
     pygame.display.flip()
-    
