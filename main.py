@@ -2,9 +2,16 @@ import os
 import sys
 import pygame
 import requests
-from yandex_functions import get_ll_spn, get_coordinates, get_nearest_object, geocode
+from functions import get_ll_spn, get_coordinates, get_nearest_object, geocode
 
 toponym_to_find = "Красноярск, ул. Ленина, 114"
+map_api_server = "http://static-maps.yandex.ru/1.x/"
+map_params = {
+    "ll": get_ll_spn(toponym_to_find)[0],
+    "spn": get_ll_spn(toponym_to_find)[1],
+    "l": "map"
+}
+map1 = 'http://static-maps.yandex.ru/1.x/?ll=92.854072,56.012447&l=map&z=18'
 
 
 def load_map(resp, name):
@@ -20,25 +27,15 @@ def load_map(resp, name):
         file.write(response.content)
 
 
-map_api_server = "http://static-maps.yandex.ru/1.x/"
-map_params = {
-    "ll": get_ll_spn(toponym_to_find)[0],
-    "spn": get_ll_spn(toponym_to_find)[1],
-    "l": "map"
-}
-
 pygame.init()
 screen = pygame.display.set_mode((600, 450))
-response = requests.get(map_api_server, params=map_params)
-load_map(toponym_to_find, "map.png")
+load_map(map1, "map1.png")
 
 running = True
 while running:
-    screen.blit(pygame.image.load(map), (0, 0))
-    pygame.display.flip()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            os.remove(map)
-    screen.blit(pygame.image.load(map), (0, 0))
+            os.remove('map1.png')
+    screen.blit(pygame.image.load('map1.png'), (0, 0))
     pygame.display.flip()
