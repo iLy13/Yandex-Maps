@@ -28,7 +28,6 @@ def load_map(server, params, name):
 
 pygame.init()
 screen = pygame.display.set_mode((600, 450))
-load_map(map_api_server, map_params, "map1.png")
 
 running = True
 while running:
@@ -36,5 +35,6 @@ while running:
         if event.type == pygame.QUIT:
             pygame.quit()
             os.remove('map1.png')
+    load_map(map_api_server, map_params, "map1.png")
     screen.blit(pygame.image.load('map1.png'), (0, 0))
     pygame.display.flip()
