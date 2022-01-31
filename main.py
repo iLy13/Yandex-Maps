@@ -6,10 +6,12 @@ from functions import get_ll_spn, get_coordinates, get_nearest_object, geocode
 
 toponym_to_find = "Красноярск, ул. Ленина, 114"
 map_api_server = "http://static-maps.yandex.ru/1.x/"
+point = "{0},{1}".format(get_coordinates(toponym_to_find)[0], get_coordinates(toponym_to_find)[1])
 map_params = {
     "ll": get_ll_spn(toponym_to_find)[0],
     "spn": get_ll_spn(toponym_to_find)[1],
     "l": "map"
+    "pt": "{0},pm2dgl".format(point)
 }
 map1 = 'http://static-maps.yandex.ru/1.x/?ll=92.854072,56.012447&l=map&z=18'
 
