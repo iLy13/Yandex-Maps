@@ -11,14 +11,13 @@ map_params = {
     "spn": get_ll_spn(toponym_to_find)[1],
     "l": "map"
 }
-map1 = 'http://static-maps.yandex.ru/1.x/?ll=92.854072,56.012447&l=map&z=18'
 
 
-def load_map(resp, name):
-    response = requests.get(resp)
+def load_map(server, params, name):
+    response = requests.get(server, params)
     if not response:
         print("Ошибка выполнения запроса:")
-        print(resp)
+        print(server + params)
         print("Http статус:", response.status_code, "(", response.reason, ")")
         sys.exit(1)
 
@@ -29,7 +28,7 @@ def load_map(resp, name):
 
 pygame.init()
 screen = pygame.display.set_mode((600, 450))
-load_map(map1, "map1.png")
+load_map(map_api_server, map_params, "map1.png")
 
 running = True
 while running:
