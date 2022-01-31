@@ -11,14 +11,13 @@ map_params = {
     "spn": get_ll_spn(toponym_to_find)[1],
     "l": "map"
 }
-map1 = 'http://static-maps.yandex.ru/1.x/?ll=92.854072,56.012447&l=map&z=18'
 
 
 def load_map(server, params, name):
     response = requests.get(server, params)
     if not response:
         print("Ошибка выполнения запроса:")
-        print(server, params)
+        print(server + params)
         print("Http статус:", response.status_code, "(", response.reason, ")")
         sys.exit(1)
 
@@ -32,10 +31,34 @@ screen = pygame.display.set_mode((600, 450))
 load_map(map_api_server, map_params, "map1.png")
 
 running = True
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             os.remove('map1.png')
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_0:
+                map_params = {
+                    "ll": get_ll_spn(toponym_to_find)[0],
+                    "spn": get_ll_spn(toponym_to_find)[1],
+                    "l": "sat"
+                }
+                load_map(map_api_server, map_params, "map1.png")
+            elif event.key == pygame.K_1:
+                map_params = {
+                    "ll": get_ll_spn(toponym_to_find)[0],
+                    "spn": get_ll_spn(toponym_to_find)[1],
+                    "l": "map"
+                }
+                load_map(map_api_server, map_params, "map1.png") 
+            if event.key == pygame.K_2:
+                map_params = {
+                    "ll": get_ll_spn(toponym_to_find)[0],
+                    "spn": get_ll_spn(toponym_to_find)[1],
+                    "l": "sat,trf,skl"
+                }
+                load_map(map_api_server, map_params, "map1.png")            
+                
     screen.blit(pygame.image.load('map1.png'), (0, 0))
     pygame.display.flip()
