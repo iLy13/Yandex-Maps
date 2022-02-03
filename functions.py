@@ -63,3 +63,13 @@ def get_nearest_object(point, kind):
     json_response = response.json()
     features = json_response["response"]["GeoObjectCollection"]["featureMember"]
     return features[0]["GeoObject"]["name"] if features else None
+
+
+def get_index(geocode):
+    geocoder_api_server = "http://geocode-maps.yandex.ru/1.x/"
+    geocoder_params = {
+        "apikey": "40d1649f-0493-4b70-98ba-98533de7710b",
+        "geocode": geocode,
+        "format": "json"}
+    response = requests.get(geocoder_api_server, params=geocoder_params).json()
+    return response["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
