@@ -45,6 +45,16 @@ def get_ll_spn(address):
     return ll, span
 
 
+def get_envelope(address):
+    toponym = geocode(address)
+    if not toponym:
+        return None, None, None, None
+    envelope = toponym['boundedBy']['Envelope']
+    l, b = envelope["lowerCorner"].split(" ")
+    r, t = envelope["upperCorner"].split(" ")
+    return l, b, r, t
+
+
 def get_nearest_object(point, kind):
     ll = "{0},{1}".format(point[0], point[1])
     geocoder_request = f"http://geocode-maps.yandex.ru/1.x/"

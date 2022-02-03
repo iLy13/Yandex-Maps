@@ -40,9 +40,7 @@ while running:
             os.remove('map1.png')
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             x, y = pygame.mouse.get_pos()
-            mx, my = width - x, height - y
-            coords = map_params['ll'][0], map_params['ll'][1]
-            koefx, koefy = mx / float(coords[0]), my / float(coords[1])
+            
             if event.key == pygame.K_0:
                 map_params = {
                     "ll": get_ll_spn(toponym_to_find)[0],
