@@ -46,13 +46,16 @@ def get_ll_spn(address):
     return ll, span
 
 
-def screen_to_geo(pos, ll, zoom):
+def screen_to_geo(pos, ll, address):
+    zoom = geocode(address)['zoom']
     coord_to_geo_x = 0.0000428
     coord_to_geo_y = 0.0000428
-    dy = 225 - pos[1]
     dx = pos[0] - 300
-    lx = ll[0] + dx * coord_to_geo_x * math.pow(2, 15 - zoom)
-    ly = ll[1] + dy * coord_to_geo_y * math.cos(math.radians(ll[0])) * math.pow(2, 15 - zoom)
+    dy = 225 - pos[1]
+    lx = float(ll.split(',')[0]) + dx * coord_to_geo_x * \
+         math.cos(math.radians(float(ll.split(',')[1]))) * math.pow(2, 15 - int(zoom))
+    ly = float(ll.split(',')[1]) + dy * coord_to_geo_y * \
+         math.cos(math.radians(float(ll.split(',')[0]))) * math.pow(2, 15 - int(zoom))
     return lx, ly
 
 
