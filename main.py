@@ -2,7 +2,7 @@ import os
 import sys
 import pygame
 import requests
-from functions import get_ll_spn, get_coordinates, get_nearest_object, geocode
+from functions import get_ll_spn, get_envelope
 
 toponym_to_find = "Красноярск, ул. Ленина, 114"
 map_api_server = "http://static-maps.yandex.ru/1.x/"
@@ -40,7 +40,9 @@ while running:
             os.remove('map1.png')
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             x, y = pygame.mouse.get_pos()
-            
+            l, b, r, t = get_envelope(toponym_to_find)
+            print(l, b, r, t)
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_0:
                 map_params = {
                     "ll": get_ll_spn(toponym_to_find)[0],

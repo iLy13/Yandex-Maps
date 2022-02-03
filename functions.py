@@ -1,4 +1,5 @@
 import requests
+import math
 
 
 def geocode(address):
@@ -45,14 +46,14 @@ def get_ll_spn(address):
     return ll, span
 
 
-def get_envelope(address):
-    toponym = geocode(address)
-    if not toponym:
-        return None, None, None, None
-    envelope = toponym['boundedBy']['Envelope']
-    l, b = envelope["lowerCorner"].split(" ")
-    r, t = envelope["upperCorner"].split(" ")
-    return l, b, r, t
+def screen_to_geo(pos, ll, zoom):
+    coord_to_geo_x = 0.0000428
+    coord_to_geo_y = 0.0000428
+    dy = 225 - pos[1]
+    dx = pos[0] - 300
+    lx = ll[0] + dx * coord_to_geo_x * math.pow(2, 15 - zoom)
+    ly = ll[1] + dy * coord_to_geo_y * math.cos(math.radians(ll[0])) * math.pow(2, 15 - zoom)
+    return lx, ly
 
 
 def get_nearest_object(point, kind):
